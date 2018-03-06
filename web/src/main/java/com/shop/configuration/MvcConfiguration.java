@@ -1,4 +1,4 @@
-package com.shop.controller;
+package com.shop.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,5 +19,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
         registry.viewResolver(resolver);
+        
     }
 }

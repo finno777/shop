@@ -1,4 +1,4 @@
-package com.shop.server.server;
+package com.shop.server.service;
 
 import com.shop.server.model.Product;
 

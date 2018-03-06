@@ -35,7 +35,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void saveProduct(Product product) {
-        getSession().save(product);
+        getSession().saveOrUpdate(product);
     }
 
     @Override
