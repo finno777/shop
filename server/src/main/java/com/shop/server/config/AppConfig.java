@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(value = {"com.shop.server"})
-public class AppConfig {
+public class  AppConfig {
 
 }

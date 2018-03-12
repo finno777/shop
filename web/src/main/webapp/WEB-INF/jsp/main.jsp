@@ -1,6 +1,7 @@
 <%@page session="true" contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<c:set var="cr" scope="request" value="${pageContext.request.contextPath}"/>
 
 <!doctype html>
 <html lang="en">
@@ -12,10 +13,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
-        <%@ include file="../css/main.css"%>
+        <%@ include file="../css/main.css" %>
     </style>
 </head>
 <body>
+
+
+
 <div class="wrapper">
     <header class="header">
         <div class="container">
@@ -46,22 +50,24 @@
                                 <security:authorize access="hasRole('ROLE_USER')">
                                     <ul class="item__action">
                                         <li>
-                                            <button class="_edit js-product"></button>
+                                            <button class="_edit js-product"><img src="https://image.flaticon.com/icons/svg/61/61456.svg">
+                                            </button>
                                         </li>
                                         <li>
-                                            <button data-id="${product.productId}" class="_del js-remove-product"></button>
+                                            <button data-id="${product.productId}" class="_del js-remove-product"><img src="https://png.icons8.com/metro/1600/delete-sign.png">
+                                            </button>
                                         </li>
                                     </ul>
                                 </security:authorize>
 
                                 <div class="item__img">
-                                    <a href="${renderProductUrl}">
+                                    <a href="/product/${product.productId}">
                                         <img src="https://dummyimage.com/350x200/f5f5f5/000000.jpg" alt="">
                                     </a>
                                 </div>
                                 <div class="item__body">
                                     <div class="item__title">
-                                        <a href="${renderProductUrl}"> ${product.name}</a>
+                                        <a href="/product/${product.productId}"> ${product.name}</a>
                                     </div>
                                     <div class="item__price">${product.price}$</div>
                                 </div>

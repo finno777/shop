@@ -157,22 +157,13 @@ button {
             background-color: darken(dodgerblue, 5%);
           }
 
-          &:before {
-            content: '';
+          img {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 16px;
             height: 16px;
-          }
-
-          &._del:before {
-            background: url('../images/del.png') no-repeat center;
-          }
-
-          &._edit:before {
-            background: url('../images/edit.png') no-repeat center;
           }
         }
       }

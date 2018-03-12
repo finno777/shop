@@ -4,6 +4,7 @@ import com.shop.server.model.Product;
 import com.shop.server.service.ProductService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -52,11 +53,17 @@ public class MainController {
         return model;
     }
 
-    @RequestMapping(value = "/product", method = RequestMethod.GET)
-    public ModelAndView product(@RequestParam Long id) {
-        ModelAndView model=new ModelAndView();
-            model.addObject("product", productService.getProductById(id));
-            return model;
+    @RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)
+    public String product(@PathVariable String productId , ModelMap modelMap) {
+        try {
+            Long id = Long.valueOf(productId);
+            modelMap.addAttribute("product", productService.getProductById(id));
+            return "product";
+        }
+        catch (Exception e){
+            log.debug("***ERROR***"  + e.getMessage());
+            return "main";
+        }
     }
 
 

@@ -19,6 +19,5 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
         registry.viewResolver(resolver);
-        
     }
 }

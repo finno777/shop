@@ -1,39 +1,44 @@
 package com.shop.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 
-@Configuration
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/main","/product").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .csrf()
-                .disable()
-                .logout()
-                .logoutUrl("/main")
-                .permitAll();
-    }
+    @Configuration
+    @EnableWebSecurity
+    public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .antMatchers("/", "/main", "/product", "/product/{productId}").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .and()
+                    .csrf()
+                    .disable()
+                    .logout()
+                    .logoutUrl("/main")
+                    .permitAll();
+        }
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("user").password("P@ssw0rd").roles("USER");
+                .withUser("user").password("user").roles("USER");
+        auth
+                .inMemoryAuthentication()
+                .withUser("admin").password("admin").roles("ADMIN");
     }
 }

@@ -163,8 +163,7 @@ button {
 .catalog__item .item__action button:hover {
   background-color: #0583ff;
 }
-.catalog__item .item__action button:before {
-  content: '';
+.catalog__item .item__action button img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -172,12 +171,6 @@ button {
           transform: translate(-50%, -50%);
   width: 16px;
   height: 16px;
-}
-.catalog__item .item__action button._del:before {
-  background: url("../images/del.png") no-repeat center;
-}
-.catalog__item .item__action button._edit:before {
-  background: url("../images/edit.png") no-repeat center;
 }
 .catalog__item .item__title {
   font-weight: bold;

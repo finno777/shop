@@ -11,6 +11,10 @@
     <title>Title</title>
 </head>
 <body>
-    Product
+<ul>
+    <li>id - ${product.productId}</li>
+    <li>name - ${product.name}</li>
+    <li>price - ${product.price}</li>
+</ul>
 </body>
 </html>
