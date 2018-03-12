@@ -6,6 +6,7 @@
 
 
     <context:component-scan base-package="com.shop.server"/>
+
     <tx:annotation-driven/>
 
 

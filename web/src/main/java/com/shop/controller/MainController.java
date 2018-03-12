@@ -1,6 +1,8 @@
 package com.shop.controller;
 
+import com.shop.server.model.Comment;
 import com.shop.server.model.Product;
+import com.shop.server.service.CommentService;
 import com.shop.server.service.ProductService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class MainController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    CommentService commentService;
 
 
 
@@ -57,7 +61,9 @@ public class MainController {
     public String product(@PathVariable String productId , ModelMap modelMap) {
         try {
             Long id = Long.valueOf(productId);
-            modelMap.addAttribute("product", productService.getProductById(id));
+            Product product=productService.getProductById(id);
+            modelMap.addAttribute("product", product);
+            modelMap.addAttribute("comments",productService.getCommentByProduct(product.getProductId()));
             return "product";
         }
         catch (Exception e){
@@ -65,7 +71,6 @@ public class MainController {
             return "main";
         }
     }
-
 
 
     @RequestMapping(value = "/addProduct",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -77,7 +82,22 @@ public class MainController {
             return ResponseEntity.ok(product);
         }catch (Exception e){
             log.error(e.getMessage(),e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(product);
+        }
+    }
+    @RequestMapping(value = "/addComment",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Comment> saveComment(@RequestBody Comment comment){
+        try{
+            log.debug("Добавляю комментарий");
+            Long productId = comment.getProduct().getProductId();
+            log.debug("Ид продукта" +productId);
+            commentService.saveComment(comment,productId);
+            log.debug("Добавил");
+            return ResponseEntity.ok(comment);
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            log.debug("ERROR");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(comment);
         }
     }
     @RequestMapping(value = "/deleteProduct",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)

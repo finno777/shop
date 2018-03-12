@@ -28,9 +28,12 @@
                 <ul class="header__actions">
                     <security:authorize access="isAuthenticated()">
                         <li><a href="/logout" class="btn btn-primary">Logout</a></li>
-                        <li>
-                            <button class="btn btn-success js-product">Add product</button>
-                        </li>
+
+                    </security:authorize>
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <li>
+                        <button class="btn btn-success js-product">Add product</button>
+                    </li>
                     </security:authorize>
                     <security:authorize access="!isAuthenticated()">
                         <li><a href="/login" class="btn btn-primary">Login</a></li>
@@ -47,7 +50,7 @@
                     <c:forEach var="product" items="${products}">
                         <div class="col-md-4">
                             <div class="catalog__item" id="${product.productId}">
-                                <security:authorize access="hasRole('ROLE_USER')">
+                                <security:authorize access="hasRole('ROLE_ADMIN')">
                                     <ul class="item__action">
                                         <li>
                                             <button class="_edit js-product"><img src="https://image.flaticon.com/icons/svg/61/61456.svg">
@@ -92,12 +95,11 @@
     <div class="form-popup__inner">
         <div class="form-group">
             <label>Name</label>
-            <input type="email" class="form-control"
-                   aria-describedby="emailHelp" placeholder="Name">
+            <input type="text" class="form-control" placeholder="Name">
         </div>
         <div class="form-group">
             <label>Price</label>
-            <input type="password" class="form-control"
+            <input type="number" class="form-control"
                    placeholder="Price">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

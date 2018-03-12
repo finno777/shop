@@ -46,7 +46,6 @@
 
             removeBtn.forEach(btn => {
                 btn.addEventListener('click', function () {
-                    console.log(1);
                     const request = new XMLHttpRequest();
                     request.open('DELETE', 'http://localhost:8080/deleteProduct?id=' + this.dataset.id);
                     request.setRequestHeader('Content-Type', 'application/json');

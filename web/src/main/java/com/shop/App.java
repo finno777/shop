@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @ComponentScan("com.shop")
-//@ImportResource("classpath:security.xml")
 public class App extends SpringBootServletInitializer {
 
     @Override
