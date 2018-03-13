@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @ComponentScan("com.shop")
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -20,4 +21,5 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         resolver.setViewClass(JstlView.class);
         registry.viewResolver(resolver);
     }
+
 }

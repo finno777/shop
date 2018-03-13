@@ -14,5 +14,4 @@ public interface ProductDao {
 
     void deleteProduct(Long id);
 
-
 }

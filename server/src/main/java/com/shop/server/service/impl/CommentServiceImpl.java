@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Log4j
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     @Autowired
     ProductService productService;
@@ -22,7 +22,7 @@ public class CommentServiceImpl implements CommentService{
     CommentDao commentDao;
 
     @Override
-    public void saveComment(Comment comment,Long id) {
+    public void saveComment(Comment comment, Long id) {
         log.debug("get product by id");
         Product productById = productService.getProductById(id);
         comment.setProduct(productById);

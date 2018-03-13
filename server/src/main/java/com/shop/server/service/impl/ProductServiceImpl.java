@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(Long id) {
-            return productDao.getProductById(id);
+        return productDao.getProductById(id);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
         log.debug("Save product");
 
         log.debug("Чек если есть коменты");
-        if(product.getComments()!=null) {
+        if (product.getComments() != null) {
             List<Comment> allCommentByProduct = commentDao.getAllCommentByProduct(product);
             log.debug("Идём по комментам");
             for (Comment comment : allCommentByProduct) {
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProductById(Long id) {
-        if(id!=null){
+        if (id != null) {
             log.debug("Delete product");
             productDao.deleteProduct(id);
         }

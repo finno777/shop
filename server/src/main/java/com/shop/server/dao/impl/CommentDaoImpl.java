@@ -10,29 +10,17 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Repository
 @Transactional
-public class CommentDaoImpl implements CommentDao{
+public class CommentDaoImpl implements CommentDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    protected Session getSession(){
+    protected Session getSession() {
         return this.sessionFactory.getCurrentSession();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Comment getCommentById(Long id) {
-        return (Comment) getSession().get(Comment.class,id);
-    }
-
-    @Override
-    public List<Comment> getAllComments() {
-        return getSession().createCriteria(Comment.class).list();
     }
 
     @Override
@@ -40,19 +28,12 @@ public class CommentDaoImpl implements CommentDao{
         getSession().saveOrUpdate(comment);
     }
 
-    @Override
-    public void deleteComment(Long id) {
-        if(id!=null){
-            Comment comment=getCommentById(id);
-            getSession().delete(comment);
-        }
-    }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Comment> getAllCommentByProduct(Product product) {
-        Criteria criteria=getSession().createCriteria(Comment.class);
-        criteria.add(Restrictions.eq("product",product));
+        Criteria criteria = getSession().createCriteria(Comment.class);
+        criteria.add(Restrictions.eq("product", product));
         return criteria.list();
     }
 }

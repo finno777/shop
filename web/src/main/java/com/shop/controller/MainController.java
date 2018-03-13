@@ -6,7 +6,6 @@ import com.shop.server.service.CommentService;
 import com.shop.server.service.ProductService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,18 +31,17 @@ public class MainController {
     CommentService commentService;
 
 
-
-    @RequestMapping(value = {"/","/main"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/main"}, method = RequestMethod.GET)
     public String main(ModelMap model) {
         log.debug("render main");
-        model.addAttribute("products",productService.getAllProducts());
+        model.addAttribute("products", productService.getAllProducts());
         return "main";
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";
@@ -53,54 +51,55 @@ public class MainController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
         log.debug("render login");
-        ModelAndView model=new ModelAndView();
+        ModelAndView model = new ModelAndView();
         return model;
     }
 
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)
-    public String product(@PathVariable String productId , ModelMap modelMap) {
+    public String product(@PathVariable String productId, ModelMap modelMap) {
         try {
             Long id = Long.valueOf(productId);
-            Product product=productService.getProductById(id);
+            Product product = productService.getProductById(id);
             modelMap.addAttribute("product", product);
-            modelMap.addAttribute("comments",productService.getCommentByProduct(product.getProductId()));
+            modelMap.addAttribute("comments", productService.getCommentByProduct(product.getProductId()));
             return "product";
-        }
-        catch (Exception e){
-            log.debug("***ERROR***"  + e.getMessage());
+        } catch (Exception e) {
+            log.debug("***ERROR***" + e.getMessage());
             return "main";
         }
     }
 
 
-    @RequestMapping(value = "/addProduct",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product){
+    @RequestMapping(value = "/addProduct", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         try {
             log.debug("*****SAVE*****");
             productService.saveProduct(product);
             log.debug("Save complete");
             return ResponseEntity.ok(product);
-        }catch (Exception e){
-            log.error(e.getMessage(),e);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(product);
         }
     }
-    @RequestMapping(value = "/addComment",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Comment> saveComment(@RequestBody Comment comment){
-        try{
+
+    @RequestMapping(value = "/addComment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Comment> saveComment(@RequestBody Comment comment) {
+        try {
             log.debug("Добавляю комментарий");
             Long productId = comment.getProduct().getProductId();
-            log.debug("Ид продукта" +productId);
-            commentService.saveComment(comment,productId);
+            log.debug("Ид продукта" + productId);
+            commentService.saveComment(comment, productId);
             log.debug("Добавил");
             return ResponseEntity.ok(comment);
-        }catch (Exception e){
-            log.error(e.getMessage(),e);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
             log.debug("ERROR");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(comment);
         }
     }
-    @RequestMapping(value = "/deleteProduct",method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @RequestMapping(value = "/deleteProduct", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteProduct(@RequestParam Long id) {
         try {
             log.debug("Get Product Id" + id);

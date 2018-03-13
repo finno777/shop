@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Data
@@ -22,15 +21,15 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long commentId;
-    @Column(name = "comment_text",length = 100)
+    @Column(name = "comment_text", length = 100)
     private String text;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Product product;
 
-    public Comment(long l, String testComment) {
-        this.commentId=l;
-        this.text=testComment;
+    public Comment(Long id, String text) {
+        this.commentId=id;
+        this.text=text;
     }
 }

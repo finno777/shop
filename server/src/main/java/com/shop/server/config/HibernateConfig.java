@@ -11,7 +11,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -19,6 +18,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource(value = {"classpath:prop.properties"})
 public class HibernateConfig {
+
     @Autowired
     private Environment env;
 
@@ -46,7 +46,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        sessionFactory.setPackagesToScan(new String[] { "com.shop.server" });
+        sessionFactory.setPackagesToScan(new String[]{"com.shop.server"});
         sessionFactory.setHibernateProperties(getHibernateProperties());
         return sessionFactory;
     }

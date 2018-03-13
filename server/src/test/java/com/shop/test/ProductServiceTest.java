@@ -11,12 +11,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:app.xml"})
-
+@Transactional
 public class ProductServiceTest {
 
 
@@ -24,7 +25,10 @@ public class ProductServiceTest {
     ProductService productService;
 
     private Product getProduct(){
-        Product product=new Product(2L,"tests",1L);
+        List<Comment> comments=new ArrayList<>();
+        Comment comment=new Comment(1L,"test");
+        comments.add(comment);
+        Product product=new Product(1L,"test",1L,comments);
         return product;
     }
 
@@ -44,7 +48,7 @@ public class ProductServiceTest {
     }
     @Test
     public void getAllCommentsByProduct(){
-        List<Comment> commentByProduct = productService.getCommentByProduct((long) 2);
+        List<Comment> commentByProduct = productService.getCommentByProduct(getProduct().getProductId());
         System.out.println(commentByProduct);
     }
 
